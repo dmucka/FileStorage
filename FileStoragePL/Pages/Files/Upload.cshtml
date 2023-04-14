@@ -1,0 +1,34 @@
+﻿@page
+@model FileStoragePL.Pages.Files.UploadModel
+@{
+    ViewData["Title"] = "Upload File";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Upload a file</h1>
+    <p>Please, select the file you would like to upload.</p>
+    <a asp-page="/VersionedFiles/Open" asp-route-id="@this.Model.FileVersionModel.VersionedFileId">Return</a>
+    <hr />
+
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <form enctype="multipart/form-data" method="post">
+                <dl>
+                    <dd>
+                        <input asp-for="FileUpload.FormFile" type="file" />
+                        <span asp-validation-for="FileUpload.FormFile"></span>
+                    </dd>
+                </dl>
+                <input asp-page-handler="Upload" asp-route-id="@this.Model.FileVersionModel.Id" class="btn btn-primary w-100" type="submit" value="Upload" />
+            </form>
+
+            <p class="result">
+                @Model.Result
+            </p>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

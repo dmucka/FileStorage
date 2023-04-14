@@ -1,0 +1,46 @@
+﻿@page
+@model FileStoragePL.Pages.FileVersions.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>FileVersion</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FileVersion.Number" class="control-label"></label>
+                <input asp-for="FileVersion.Number" class="form-control" />
+                <span asp-validation-for="FileVersion.Number" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FileVersion.Changelog" class="control-label"></label>
+                <input asp-for="FileVersion.Changelog" class="form-control" />
+                <span asp-validation-for="FileVersion.Changelog" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FileVersion.VersionedFileId" class="control-label"></label>
+                <select asp-for="FileVersion.VersionedFileId" class="form-control" asp-items="ViewBag.VersionedFileId"></select>
+                <span asp-validation-for="FileVersion.VersionedFileId" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="FileVersion.Id" />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

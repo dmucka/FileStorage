@@ -1,0 +1,57 @@
+﻿@page
+@model FileStoragePL.Pages.Folders.OpenModel
+@{
+    ViewData["Title"] = this.Model.FolderModel.Name;
+}
+
+<div class="text-center">
+
+    <h1 class="display-4">Folder @this.Model.FolderModel.Name</h1>
+    <p>You can upload or download files, or create new subfolders.</p>
+    <hr />
+
+    <div class="row justify-content-center">
+        <a asp-page="/Folders/Add" asp-route-id="@this.Model.FolderModel.Id" class="btn btn-success text-white mr-5">New Subfolder</a>
+        <a asp-page="/VersionedFiles/Add" asp-route-id="@this.Model.FolderModel.Id" class="btn btn-success text-white mr-5">New Versioned File</a>
+        <a asp-page="/Folders/Rename" asp-route-id="@this.Model.FolderModel.Id" class="btn btn-warning text-white mr-5">Rename folder</a>
+        <a asp-page="/Folders/Remove" asp-route-id="@this.Model.FolderModel.Id" class="btn btn-danger text-white">Delete folder</a>
+    </div>
+
+
+    <div class="container">
+        <div class="folder-wrapper d-flex justify-content-center row">
+            @if (Model.FolderModel.FolderId != null)
+            {
+                <a class="folder-item btn btn-secondary text-white" asp-page="/Folders/Open" asp-route-id="@Model.FolderModel.FolderId">
+                    <div class="folder-image">⬆️</div>
+                    <span class="folder-name">Return</span>
+                </a>
+            }
+            else
+            {
+                <a class="folder-item btn btn-secondary text-white" asp-page="/Index">
+                    <div class="folder-image">⬆️</div>
+                    <span class="folder-name">Return</span>
+                </a>
+            }
+
+
+            @foreach (var folder in Model.FolderModel.Folders)
+            {
+                <a class="folder-item btn btn-secondary text-white" asp-page="/Folders/Open" asp-route-id="@folder.Id">
+                    <div class="folder-image">📁</div>
+                    <span class="folder-name">@folder.Name</span>
+                </a>
+            }
+
+            @foreach (var file in Model.FolderModel.VersionedFiles)
+            {
+                <a class="folder-item btn btn-secondary text-white" asp-page="/VersionedFiles/Open" asp-route-id="@file.Id">
+                    <div class="folder-image">🗎</div>
+                    <span class="folder-name">@file.Name</span>
+                    <span class="folder-name">@file.NewestVersion.Number</span>
+                </a>
+            }
+        </div>
+    </div>
+</div>

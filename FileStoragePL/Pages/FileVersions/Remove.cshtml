@@ -1,0 +1,28 @@
+﻿@page
+@model FileStoragePL.Pages.FileVersions.RemoveModel
+@{
+    ViewData["Title"] = "Remove Version";
+}
+<div class="text-center">
+
+    <h1 class="display-4">Version @this.Model.FileVersionModel.Number of file @this.Model.FileVersionModel.VersionedFile.Name</h1>
+    <p>Are you sure you want to delete this version?</p>
+    <a asp-page="/VersionedFiles/Open" asp-route-id="@this.Model.FileVersionModel.VersionedFileId">Return</a>
+    <hr />
+
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <form method="post">
+                <input type="hidden" asp-for="@this.Model.FileVersionModel.Id" />
+                @if (this.Model.FileVersionModel.VersionedFile.FileVersions.Count > 1)
+                {
+                    <input type="submit" value="Delete" class="btn btn-danger w-100" />
+                }
+                else
+                {
+                    <input type="submit" value="Delete" class="btn btn-danger w-100" disabled />
+                }
+            </form>
+        </div>
+    </div>
+</div>

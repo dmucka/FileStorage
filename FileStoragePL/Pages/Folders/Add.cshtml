@@ -1,0 +1,42 @@
+﻿@page
+@model FileStoragePL.Pages.Folders.AddModel
+@{
+    ViewData["Title"] = "Add Folder";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Add new folder</h1>
+    @if (this.Model.RootFolder != null)
+    {
+        <p>Create a subfolder with specified name in the folder @this.Model.RootFolder.Name.</p>
+        <a asp-page="/Folders/Open" asp-route-id="@this.Model.RootFolder.Id">Return</a>
+    }
+    else
+    {
+        <p>Create a new root folder with the specified name.</p>
+        <a asp-page="/Index">Return</a>
+    }
+    <hr />
+
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Input.Name" class="control-label"></label>
+                    <input asp-for="Input.Name" class="form-control" />
+                    <span asp-validation-for="Input.Name" class="text-danger"></span>
+                </div>
+                <input type="hidden" asp-for="@this.Model.RootFolder.Id" />
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary w-100" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,39 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+
+    @if (this.User.Identity.IsAuthenticated)
+    {
+        <h1 class="display-4">Storage of @Model.UserModel.Username</h1>
+        <p>Start by creating new root folders.</p>
+        <hr />
+
+        <div class="row justify-content-center">
+            <a asp-page="./Folders/Add" class="btn btn-success text-white">New Folder</a>
+        </div>
+
+
+        <div class="container">
+            <div class="folder-wrapper d-flex justify-content-center row">
+                @foreach (var folder in Model.FolderModel)
+                {
+                    <a class="folder-item btn btn-secondary text-white" asp-page="/Folders/Open" asp-route-id="@folder.Id">
+                        <div class="folder-image">📁</div>
+                        <span class="folder-name">@folder.Name</span>
+                    </a>
+                }
+            </div>
+        </div>
+    }
+    else
+    {
+        <h1 class="display-4">Welcome</h1>
+        <p>Please register or login to start uploading and downloading files.</p>
+        <hr />
+    }
+
+</div>

@@ -1,0 +1,33 @@
+﻿@page
+@model FileStoragePL.Pages.Folders.RenameModel
+@{
+    ViewData["Title"] = "Rename Folder";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Rename folder @this.Model.FolderModel.Name</h1>
+    <a asp-page="/Folders/Open" asp-route-id="@this.Model.FolderModel.Id">Return</a>
+    <hr />
+
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Input.Name" class="control-label"></label>
+                    <input asp-for="Input.Name" class="form-control" value="@Model.FolderModel.Name" />
+                    <span asp-validation-for="Input.Name" class="text-danger"></span>
+                </div>
+                <input type="hidden" asp-for="@this.Model.FolderModel.Id" />
+                <div class="form-group">
+                    <input type="submit" value="Rename" class="btn btn-primary w-100" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

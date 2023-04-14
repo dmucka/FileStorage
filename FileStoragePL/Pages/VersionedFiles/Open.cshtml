@@ -1,0 +1,54 @@
+﻿@page
+@model FileStoragePL.Pages.VersionedFiles.OpenModel
+@{
+    ViewData["Title"] = this.Model.VersionedFileModel.Name;
+}
+
+<div class="text-center">
+
+    <h1 class="display-4">Versioned file @this.Model.VersionedFileModel.Name</h1>
+    <p>You can view information about this versioned file, or upload new versions.</p>
+    <a asp-page="/Folders/Open" asp-route-id="@this.Model.VersionedFileModel.FolderId">Return</a>
+    <hr />
+
+    <div class="row justify-content-center">
+        <a asp-page="/FileVersions/Add" asp-route-id="@this.Model.VersionedFileModel.Id" class="btn btn-success text-white mr-5">Add new version</a>
+        <a asp-page="/VersionedFiles/Rename" asp-route-id="@this.Model.VersionedFileModel.Id" class="btn btn-warning text-white mr-5">Rename versioned file</a>
+        <a asp-page="/VersionedFiles/Remove" asp-route-id="@this.Model.VersionedFileModel.Id" class="btn btn-danger text-white">Delete versioned file</a>
+    </div>
+
+
+    <div class="row justify-content-center">
+        <h3 class="mt-5">Latest version @this.Model.VersionedFileModel.NewestVersion.Number</h3>
+        @foreach (var version in this.Model.VersionedFileModel.FileVersions)
+        {
+            <div class="row justify-content-center mt-5 p-5 w-100 border rounded">
+                <div>
+                    <h2>Version @version.Number</h2>
+                    <hr />
+                    <text>@version.Changelog</text>
+                    <div class="d-flex mt-3">
+                        @if (version.File != null)
+                        {
+                            <a class="btn btn-primary w-100" asp-page="/Files/Download" asp-route-id="@version.File.Id">Download</a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-success w-100" asp-page="/Files/Upload" asp-route-id="@version.Id">Upload</a>
+                        }
+
+                        @if (this.Model.VersionedFileModel.FileVersions.Count > 1)
+                        {
+                            <a asp-page="/FileVersions/Remove" asp-route-id="@version.Id" class="btn btn-danger text-white w-100 ml-2">Delete</a>
+                        }
+                        else
+                        {
+                            <a asp-page="/FileVersions/Remove" asp-route-id="@version.Id" class="btn btn-danger text-white w-100 ml-2 disabled">Delete</a>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
